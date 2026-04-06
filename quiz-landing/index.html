@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ahora <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1124,34 +1124,35 @@
         // Quiz Data
         const questions = [
             {
-                question: "Where will you practice most?",
-                options: ["At home", "At a studio", "Both"],
-                key: "location"
+                question: "How many times a week do you work out?",
+                options: ["Once a week", "Twice a week", "3 times a week", "5 times a week", "Every day"],
+                key: "workout_frequency"
             },
             {
-                question: "What's your budget for getting started?",
-                options: ["Under £30 (essentials only)", "£30-60 (decent quality)", "£60-100 (investing in gear)", "£100+ (I want the best)"],
-                key: "budget"
+                question: "Have you done yoga before?",
+                options: ["Never (I'm new)", "Yes, I'm a beginner", "Yes, I'm intermediate", "Yes, I'm advanced"],
+                key: "yoga_experience"
             },
             {
-                question: "What's your number one concern about starting yoga?",
-                options: ["Slipping or falling", "Looking silly", "Not knowing what to do", "It might hurt", "None really"],
-                key: "concern"
+                question: "What's your age?",
+                options: [],
+                key: "age",
+                slider: { min: 18, max: 80, default: 30 }
             },
             {
-                question: "What surface will you practice on?",
-                options: ["Yoga mat (already have one)", "Carpet or rug", "Hardwood or tile", "Not sure yet"],
-                key: "surface"
+                question: "What do you want to gain from starting yoga?",
+                options: ["Get fitter", "Flexibility", "For fun", "Mental health", "Other"],
+                key: "goals"
             },
             {
-                question: "How do you feel about public studios?",
-                options: ["Excited! Ready to go", "Nervous but willing", "Intimidated, prefer home"],
-                key: "studio_feeling"
+                question: "Do you want to find a yoga studio near you?",
+                options: ["Yes", "No"],
+                key: "find_studio"
             },
             {
-                question: "Do you usually run hot or cold?",
-                options: ["Always cold", "Comfortable", "Always running hot"],
-                key: "temperature"
+                question: "Look at different types of yoga - which interests you?",
+                options: ["Hatha - gentle basics", "Vinyasa - dynamic flow", "Yin - slow stretching", "Restorative - deep relaxation", "Ashtanga - intense practice"],
+                key: "yoga_type"
             }
         ];
 
@@ -1174,7 +1175,77 @@
             const container = document.getElementById('options-container');
             container.innerHTML = '';
 
-            if (q.key === 'budget') {
+            if (q.key === 'age') {
+                // Slider for age question
+                const sliderContainer = document.createElement('div');
+                sliderContainer.className = 'slider-container';
+                const minAge = q.slider.min;
+                const maxAge = q.slider.max;
+                const defaultAge = q.slider.default;
+
+                sliderContainer.innerHTML = `
+                    <div class="slider-labels">
+                        <span>${minAge}</span>
+                        <span>${maxAge}+</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                        <button type="button" class="slider-btn slider-btn-minus" id="slider-minus">−</button>
+                        <input type="range" min="${minAge}" max="${maxAge}" value="${defaultAge}" class="slider" id="age-slider">
+                        <button type="button" class="slider-btn slider-btn-plus" id="slider-plus">+</button>
+                    </div>
+                    <div class="slider-value" id="slider-value">${defaultAge} years old</div>
+                `;
+                container.appendChild(sliderContainer);
+
+                const slider = document.getElementById('age-slider');
+                const valueDisplay = document.getElementById('slider-value');
+                const minusBtn = document.getElementById('slider-minus');
+                const plusBtn = document.getElementById('slider-plus');
+
+                function updateSliderValue() {
+                    valueDisplay.textContent = slider.value + ' years old';
+                }
+
+                function updateButtonStates() {
+                    minusBtn.disabled = slider.value <= minAge;
+                    plusBtn.disabled = slider.value >= maxAge;
+                }
+
+                slider.addEventListener('input', function() {
+                    updateSliderValue();
+                    updateButtonStates();
+                });
+
+                minusBtn.addEventListener('click', function() {
+                    if (slider.value > minAge) {
+                        slider.value = parseInt(slider.value) - 1;
+                        updateSliderValue();
+                        updateButtonStates();
+                    }
+                });
+
+                plusBtn.addEventListener('click', function() {
+                    if (slider.value < maxAge) {
+                        slider.value = parseInt(slider.value) + 1;
+                        updateSliderValue();
+                        updateButtonStates();
+                    }
+                });
+
+                // Initialize button states
+                updateButtonStates();
+
+                const continueBtn = document.createElement('button');
+                continueBtn.className = 'btn-primary';
+                continueBtn.style.marginTop = '20px';
+                continueBtn.style.width = '100%';
+                continueBtn.textContent = 'Continue';
+                continueBtn.onclick = function() {
+                    selectAnswer(q.key, slider.value);
+                };
+                container.appendChild(continueBtn);
+
+            } else if (q.key === 'budget') {
                 // Slider for budget question
                 const sliderContainer = document.createElement('div');
                 sliderContainer.className = 'slider-container';
@@ -1245,14 +1316,90 @@
                 };
                 container.appendChild(continueBtn);
             } else {
-                // Regular options
-                q.options.forEach(option => {
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.textContent = option;
-                    btn.onclick = () => selectAnswer(q.key, option);
-                    container.appendChild(btn);
-                });
+                // Check if this is the find_studio question
+                if (q.key === 'find_studio') {
+                    q.options.forEach(option => {
+                        const btn = document.createElement('button');
+                        btn.className = 'option-btn';
+                        btn.textContent = option;
+                        btn.onclick = () => {
+                            if (option === 'Yes') {
+                                // Show address input
+                                container.innerHTML = '';
+                                const inputContainer = document.createElement('div');
+                                inputContainer.style.marginTop = '20px';
+
+                                const input = document.createElement('input');
+                                input.type = 'text';
+                                input.className = 'email-input';
+                                input.placeholder = 'Enter your address or postcode';
+                                input.id = 'address-input';
+                                input.style.width = '100%';
+                                input.style.marginBottom = '15px';
+
+                                const continueBtn = document.createElement('button');
+                                continueBtn.className = 'btn-primary';
+                                continueBtn.style.width = '100%';
+                                continueBtn.textContent = 'Search on Google Maps';
+                                continueBtn.onclick = function() {
+                                    const address = document.getElementById('address-input').value;
+                                    if (address.trim()) {
+                                        // Open Google Maps with yoga studios search
+                                        const searchQuery = encodeURIComponent(`yoga studios near ${address}`);
+                                        window.open(`https://www.google.com/maps/search/${searchQuery}`, '_blank');
+
+                                        // Save answer and continue
+                                        answers['find_studio'] = 'Yes: ' + address;
+                                        if (currentQuestion < questions.length - 1) {
+                                            currentQuestion++;
+                                            showQuestion();
+                                        } else {
+                                            showResults();
+                                        }
+                                    } else {
+                                        input.style.borderColor = '#ff6b6b';
+                                        input.placeholder = 'Please enter your address';
+                                    }
+                                };
+
+                                // Also add a skip button
+                                const skipBtn = document.createElement('button');
+                                skipBtn.className = 'option-btn';
+                                skipBtn.style.marginTop = '10px';
+                                skipBtn.textContent = 'Skip';
+                                skipBtn.onclick = function() {
+                                    answers['find_studio'] = 'Skipped';
+                                    if (currentQuestion < questions.length - 1) {
+                                        currentQuestion++;
+                                        showQuestion();
+                                    } else {
+                                        showResults();
+                                    }
+                                };
+
+                                inputContainer.appendChild(input);
+                                inputContainer.appendChild(continueBtn);
+                                inputContainer.appendChild(skipBtn);
+                                container.appendChild(inputContainer);
+
+                                // Auto-focus the input
+                                setTimeout(() => input.focus(), 100);
+                            } else {
+                                selectAnswer(q.key, option);
+                            }
+                        };
+                        container.appendChild(btn);
+                    });
+                } else {
+                    // Regular options
+                    q.options.forEach(option => {
+                        const btn = document.createElement('button');
+                        btn.className = 'option-btn';
+                        btn.textContent = option;
+                        btn.onclick = () => selectAnswer(q.key, option);
+                        container.appendChild(btn);
+                    });
+                }
             }
         }
 
@@ -1267,6 +1414,78 @@
             }
         }
 
+        // Search nearby yoga studios using OpenStreetMap
+        async function searchYogaStudios(address) {
+            try {
+                // Step 1: Geocode the address using Nominatim
+                const geoResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+                const geoData = await geoResponse.json();
+
+                if (geoData.length === 0) {
+                    return { error: 'Address not found. Please try again.' };
+                }
+
+                const { lat, lon, display_name } = geoData[0];
+
+                // Step 2: Search for nearby yoga studios using Overpass API
+                const radius = 3000; // 3km radius
+                const overpassQuery = `
+                    [out:json][timeout:25];
+                    (
+                        node["leisure"="fitness_centre"](around:${radius},${lat},${lon});
+                        way["leisure"="fitness_centre"](around:${radius},${lat},${lon});
+                        relation["leisure"="fitness_centre"](around:${radius},${lat},${lon});
+                        node["leisure"="sports_centre"](around:${radius},${lat},${lon});
+                        way["leisure"="sports_centre"](around:${radius},${lat},${lon});
+                        relation["leisure"="sports_centre"](around:${radius},${lat},${lon});
+                    );
+                    out center;
+                `;
+
+                const overpassResponse = await fetch('https://overpass-api.de/api/interpreter', {
+                    method: 'POST',
+                    body: overpassQuery
+                });
+                const overpassData = await overpassResponse.json();
+
+                // Filter for yoga-related places and calculate distance
+                const studios = overpassData.elements
+                    .filter(el => el.tags && el.tags.name && (
+                        el.tags.name.toLowerCase().includes('yoga') ||
+                        (el.tags.sport && el.tags.sport.toLowerCase().includes('yoga')) ||
+                        (el.tags.description && el.tags.description.toLowerCase().includes('yoga'))
+                    ))
+                    .map(el => ({
+                        name: el.tags.name,
+                        distance: calculateDistance(lat, lon, el.lat || el.center.lat, el.lon || el.center.lon),
+                        address: el.tags['addr:street'] ? `${el.tags['addr:housenumber'] || ''} ${el.tags['addr:street']}` : 'Address not available'
+                    }))
+                    .sort((a, b) => a.distance - b.distance)
+                    .slice(0, 5); // Top 5
+
+                return {
+                    userLocation: display_name,
+                    studios: studios
+                };
+
+            } catch (error) {
+                console.error('Error searching studios:', error);
+                return { error: 'Unable to search. Please try again.' };
+            }
+        }
+
+        // Calculate distance between two coordinates (in km)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
         function showResults() {
             document.getElementById('quiz-section').classList.add('hidden');
             document.getElementById('results-section').classList.remove('hidden');
@@ -1276,25 +1495,29 @@
             const personalizedContainer = document.getElementById('personalized-items');
             let recommendations = [];
 
-            // Grip socks recommendation logic
+            // === GRIP SOCKS RECOMMENDATION ===
+            // Recommend for beginners, certain yoga types, or flexibility goals
             const needsSocks = (
-                answers.concern === "Slipping or falling" ||
-                answers.temperature === "Always cold" ||
-                answers.location === "At a studio" ||
-                answers.location === "Both" ||
-                answers.surface === "Hardwood or tile"
+                answers.yoga_experience === "Never (I'm new)" ||
+                answers.yoga_experience === "Yes, I'm a beginner" ||
+                answers.goals === "Flexibility" ||
+                answers.yoga_type === "Yin - slow stretching" ||
+                answers.yoga_type === "Ashtanga - intense practice" ||
+                answers.yoga_type === "Vinyasa - dynamic flow"
             );
 
             if (needsSocks) {
                 let reason = "";
-                if (answers.concern === "Slipping or falling") {
-                    reason = "Because you're concerned about slipping, grip socks will give you stability.";
-                } else if (answers.temperature === "Always cold") {
-                    reason = "Since you run cold, socks will keep your feet warm during floor poses.";
-                } else if (answers.location === "At a studio" || answers.location === "Both") {
-                    reason = "Studios are more hygienic with socks and you'll feel more comfortable.";
+                if (answers.yoga_experience === "Never (I'm new)" || answers.yoga_experience === "Yes, I'm a beginner") {
+                    reason = "As a beginner, grip socks will give you stability and confidence in your poses.";
+                } else if (answers.goals === "Flexibility") {
+                    reason = "For flexibility work, grip socks help you hold positions longer without slipping.";
+                } else if (answers.yoga_type === "Yin - slow stretching") {
+                    reason = "Yin yoga requires holding poses longer - grip socks keep you stable and warm.";
+                } else if (answers.yoga_type === "Ashtanga - intense practice" || answers.yoga_type === "Vinyasa - dynamic flow") {
+                    reason = "Dynamic styles like Vinyasa and Ashtanga need extra grip for flowing movements.";
                 } else {
-                    reason = "Grip socks will help you feel stable on smooth surfaces.";
+                    reason = "Grip socks enhance stability and comfort during your practice.";
                 }
 
                 recommendations.push(`
@@ -1316,25 +1539,46 @@
                 `);
             }
 
-            // Props recommendation
-            if (answers.studio_feeling === "Intimidated, prefer home" || answers.concern === "Not knowing what to do") {
+            // === PROPS RECOMMENDATION ===
+            // Recommend for beginners or those wanting to learn proper alignment
+            if (answers.yoga_experience === "Never (I'm new)" ||
+                answers.yoga_experience === "Yes, I'm a beginner" ||
+                answers.yoga_experience === "Yes, I'm intermediate") {
+
                 recommendations.push(`
                     <div class="kit-item">
                         <div class="kit-item-name">Yoga Blocks & Strap</div>
                         <div class="kit-item-desc">These props make poses accessible and help you learn proper alignment.</div>
-                        <div class="kit-item-reason">Perfect for home practice where there's no teacher to adjust you.</div>
+                        <div class="kit-item-reason">Essential for building confidence and proper form in your practice.</div>
                     </div>
                 `);
             }
 
-            // Mat recommendation based on budget
+            // === MAT RECOMMENDATION ===
+            // Update mat recommendation based on experience and yoga type
             const matRec = document.getElementById('mat-recommendation');
-            if (answers.budget && answers.budget.includes("Under")) {
-                matRec.innerHTML = `<strong>Budget pick (£20-30):</strong> Gaiam or BalanceFrom offer great starter mats. Look for 4-6mm thickness with a textured surface for grip.<br><br>Durable enough for beginners - upgrade when you're ready to commit.`;
-            } else if (answers.budget && answers.budget.includes("100+")) {
-                matRec.innerHTML = `<strong>Premium choice (£80-120):</strong> Manduka PRO or Lululemon. These mats last 10+ years and have excellent grip that improves with use.<br><br>Worth the investment if yoga becomes part of your routine.`;
+            if (answers.yoga_experience === "Never (I'm new)" || answers.yoga_experience === "Yes, I'm a beginner") {
+                matRec.innerHTML = `<strong>Starter mat (£20-35):</strong> Look for 4-6mm thickness with good grip. Brands like Gaiam, BalanceFrom, or Lululemon's entry-level mats are perfect for beginners.<br><br>Durable enough to learn and grow with - upgrade when you're ready to commit.`;
+            } else if (answers.yoga_experience === "Yes, I'm advanced" || answers.yoga_type === "Ashtanga - intense practice") {
+                matRec.innerHTML = `<strong>Premium mat (£70-120):</strong> Manduka PRO or Lululemon. These mats last 10+ years and have excellent grip that improves with use.<br><br>Worth the investment for serious practitioners.`;
+            } else if (answers.yoga_type === "Yin - slow stretching" || answers.yoga_type === "Restorative - deep relaxation") {
+                matRec.innerHTML = `<strong>Comfort-focused mat (£30-50):</strong> For Yin and Restorative, prioritize comfort and cushioning over minimal thickness. A softer mat will be more comfortable for longer holds.`;
+            } else {
+                matRec.innerHTML = `<strong>All-purpose mat (£30-50):</strong> A good balance of grip, cushioning, and durability. Look for 4-5mm thickness with a non-slip surface.`;
             }
 
+            // === YOGA TYPE SPECIFIC RECOMMENDATIONS ===
+            if (answers.goals === "Mental health" || answers.yoga_type === "Yin - slow stretching" || answers.yoga_type === "Restorative - deep relaxation") {
+                recommendations.push(`
+                    <div class="kit-item">
+                        <div class="kit-item-name">Yoga Bolster or Cushion</div>
+                        <div class="kit-item-desc">Provides support for restorative poses and meditation.</div>
+                        <div class="kit-item-reason">Perfect for deep relaxation and mental clarity practices.</div>
+                    </div>
+                `);
+            }
+
+            // If no specific recommendations
             if (recommendations.length === 0) {
                 recommendations.push(`
                     <div class="kit-item">
