@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soulmigo | Find Yoga Essentials That Fit You</title>
+    <meta name="description" content="Take our quick quiz to discover yoga essentials that fit your needs. Get personalized recommendations based on your budget, goals, and experience level.">
+    <meta property="og:title" content="Soulmigo | Find Yoga Essentials That Fit You">
+    <meta property="og:description" content="Take our quick quiz to discover yoga essentials that fit your needs. Get personalized recommendations based on your budget, goals, and experience level.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soulmigo.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1A7A3A;
+            --secondary: #C4704B;
+            --champagne: #F2E8DF;
+            --ebony: #1A1A1A;
+            --bg-glass: rgba(255, 255, 255, 0.45);
+            --text-main: #1A1A1A;
+            --text-light: #4A4A4A;
+            --transition-slow: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background: url('assets/images/beach-yoga-pose-in-sand-at-sunset.jpg') center/cover no-repeat fixed;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* --- Noise Texture Overlay --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* --- Page Container --- */
+        .page-wrapper {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            background: url('assets/images/beach-yoga-pose-in-sand-at-sunset.jpg') center/cover no-repeat;
+        }
+
+        /* --- Silhouette --- */
+        .silhouette {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            max-width: 550px;
+            height: auto;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            .silhouette {
+                display: none;
+            }
+        }
+
+        /* --- Quiz Preview Image --- */
+        .quiz-preview {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 420px;
+            max-width: 40%;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @media (max-width: 1200px) {
+            .quiz-preview {
+                width: 320px;
+                right: 30px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .quiz-preview {
+                display: none;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%); }
+            50% { transform: translateY(-52%); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(45,95,62,0.4) 0%, rgba(199,112,75,0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* --- Header --- */
+        header {
+            position: relative;
+            z-index: 100;
+            padding: 20px 0 0 60px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .logo {
+            position: relative;
+            z-index: 101;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            letter-spacing: -1.2px;
+            color: #E8E8E8;
+            text-transform: lowercase;
+        }
+
+        .logo span {
+            color: #2D5F3E;
+        }
+
+        /* --- Main Content --- */
+        .content {
+            position: relative;
+            z-index: 50;
+            min-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 100;
+        }
+
+        /* Hero content aligned left when silhouette is present */
+        .page-wrapper.hero .content {
+            align-items: flex-start;
+            padding-left: 60px;
+            padding-right: 20px;
+            max-width: 600px;
+            margin: 0;
+        }
+
+        .page-wrapper.hero .hero-content {
+            text-align: left;
+        }
+
+        .page-wrapper.hero .main-title {
+            font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+        }
+
+        .page-wrapper.hero .hero-badge {
+            margin-left: 0;
+        }
+
+        /* --- Hero Section --- */
+        .hero-content {
+            text-align: center;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border: 1px solid var(--primary);
+            border-radius: 100px;
+            background: rgba(45, 95, 62, 0.1);
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .main-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .main-title span {
+            font-style: italic;
+            color: var(--primary);
+            display: block;
+            margin-left: -2px;
+        }
+
+        .subtitle {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            max-width: 450px;
+            margin: 0 0 32px 0;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-light);
+            letter-spacing: 0;
+        }
+
+        /* --- Start Button --- */
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid transparent;
+            padding: 16px;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 72px;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 100px;
+            padding: 2px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderGradient 6s linear infinite;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 100px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            animation: borderGradient 6s linear infinite;
+            filter: blur(4px);
+            opacity: 0.25;
+            z-index: -2;
+        }
+
+        @keyframes borderGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .btn-logo {
+            height: 55px;
+            width: auto;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            shape-rendering: geometricPrecision;
+            -webkit-transform: translateZ(0) scale(1.3);
+            transform: translateZ(0) scale(1.3);
+            backface-visibility: hidden;
+        }
+
+        .btn-text {
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            padding: 16px 50px;
+            min-width: auto;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(45, 95, 62, 0.2);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 0.8;
+        }
+
+        .btn-primary:hover::after {
+            filter: blur(6px);
+            opacity: 0.4;
+        }
+
+        .btn-primary:hover .btn-text {
+            opacity: 1;
+            max-width: 200px;
+            margin-left: 12px;
+        }
+
+        /* --- Quiz Section --- */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 40px;
+            border: 2px solid transparent;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            display: none;
+            animation: slideUp 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 40px;
+            padding: 2px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderGradient 10s linear infinite;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2D5F3E;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 16.66%;
+        }
+
+        .question-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 18px 24px;
+            border-radius: 20px;
+            color: #FFFFFF;
+            font-size: 1rem;
+            font-weight: 400;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .option-btn::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 20px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            animation: borderGradient 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .option-btn:hover {
+            transform: translateX(8px);
+            border-color: transparent;
+        }
+
+        .option-btn:hover::after {
+            opacity: 0.6;
+        }
+
+        .option-btn.selected {
+            background: rgba(45, 95, 62, 0.9);
+            border-color: transparent;
+            color: white;
+        }
+
+        .option-btn.selected::after {
+            opacity: 0.7;
+        }
+
+        /* --- Slider Style --- */
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2D5F3E;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2D5F3E;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .slider-value {
+            text-align: center;
+            color: #FFFFFF;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+
+        .slider-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .slider-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .slider-btn:active {
+            transform: scale(0.95);
+        }
+
+        .slider-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slider-btn-minus {
+            line-height: 1;
+        }
+
+        .slider-btn-plus {
+            line-height: 1;
+        }
+
+        /* Adjust slider when buttons are present */
+        .slider-container input[type="range"].slider {
+            flex: 1;
+        }
+
+        /* --- Results Section --- */
+        .results-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 40px;
+            border: 2px solid transparent;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            display: none;
+            animation: slideUp 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 40px;
+            padding: 2px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderGradient 10s linear infinite;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .results-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 32px;
+        }
+
+        .kit-section {
+            margin-bottom: 32px;
+        }
+
+        .kit-section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0D6B2E;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .kit-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .kit-item-name {
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 6px;
+        }
+
+        .kit-item-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        .kit-item-reason {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 8px;
+            font-style: italic;
+            opacity: 1;
+        }
+
+        /* --- Product Placeholder --- */
+        .product-placeholder {
+            background: linear-gradient(135deg, rgba(45,95,62,0.15) 0%, rgba(255,255,255,0.1) 100%);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .product-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .product-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .product-image {
+            width: 140%;
+            height: 180px;
+            object-fit: cover;
+            object-position: center center;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: rotate(90deg);
+            transform-origin: center;
+            margin-left: -20%;
+        }
+
+        .product-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .product-content {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .product-content-image {
+                flex: 0 0 50%;
+                max-width: 200px;
+            }
+
+            .product-content-text {
+                flex: 1;
+            }
+        }
+
+        .product-image-full {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-tag {
+            display: inline-block;
+            background: #2D5F3E;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 12px;
+        }
+
+        .product-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        /* --- Email Form --- */
+        .email-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .email-form p {
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-fast);
+            color: #FFFFFF;
+        }
+
+        .email-input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #2D5F3E;
+        }
+
+        .submit-btn {
+            background: #2D5F3E;
+            color: white;
+            border: 2px solid transparent;
+            padding: 16px 28px;
+            border-radius: 100px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 100px;
+            padding: 2px;
+            background: linear-gradient(90deg,
+                #2D5F3E 0%,
+                #2CAF40 25%,
+                #C4704B 50%,
+                #2CAF40 75%,
+                #2D5F3E 100%);
+            background-size: 200% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderGradient 8s linear infinite;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .submit-btn:hover {
+            background: #3A7548;
+        }
+
+        .submit-btn:hover::before {
+            opacity: 0.6;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-message h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .success-message p {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            position: relative;
+            z-index: 100;
+            padding: 20px 40px;
+            text-align: left;
+            font-size: 0.7rem;
+            color: #FFFFFF;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            opacity: 0.6;
+        }
+
+        footer a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .page-wrapper.hero .content {
+                align-items: center;
+                padding-left: 20px;
+                padding-right: 20px;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .page-wrapper.hero .hero-content {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .quiz-container,
+            .results-container {
+                padding: 28px 20px;
+                border-radius: 30px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+
+            .option-btn {
+                padding: 16px 20px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* --- Hidden Sections --- */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+
+    <div class="page-wrapper hero" id="page-wrapper">
+        <div class="overlay"></div>
+
+        <header>
+            <div class="logo">soulmigo <span>yoga socks</span></div>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="content" id="hero-section">
+            <div class="hero-content">
+                <h1 class="main-title">
+                    Find Yoga Essentials<br><span>That Fit You</span>
+                </h1>
+                <button class="btn-primary" onclick="startQuiz()">
+                    <svg class="btn-logo" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+                        <path fill="#2D5F3E" d="m 366.49955,781.80847 c -8.4031,-1.8599 -16.4546,-7.64795 -20.6885,-14.87265 -3.8783,-6.61775 -4.4858,-18.66796 -1.313,-26.04333 2.6031,-6.05108 9.1293,-12.46943 15.8259,-15.56427 4.6736,-2.15994 4.7217,-2.16112 109.1756,-2.67551 116.8628,-0.5755 108.7057,-0.0436 120.5741,-7.86222 3.4599,-2.27929 19.8667,-17.8943 39.4259,-37.52323 l 33.5,-33.61937 -3,-2.42937 -3,-2.42936 -8.9905,8.68909 c -4.9448,4.77899 -20.6948,20.2233 -35,34.32069 -28.6703,28.25377 -31.6792,30.44913 -43.8217,31.97381 -10.907,1.36952 -18.3698,-1.00578 -26.3916,-8.40009 -11.4375,-10.54273 -13.1184,-25.71912 -4.507,-40.69265 1.4274,-2.48198 15.1054,-17.17152 30.3957,-32.64343 25.5044,-25.80746 28.0877,-28.73936 31.2782,-35.5 9.9109,-21.00075 5.4572,-48.19125 -10.7273,-65.49259 -6.9833,-7.46511 -11.9386,-11.10884 -21.5176,-15.8223 -10.4431,-5.13863 -14.1644,-5.55436 -49.7182,-5.55436 -19.7915,0 -34.4639,-0.43007 -37.7008,-1.10508 -9.7324,-2.02959 -17.6867,-6.5865 -25.8328,-14.79949 -18.7024,-18.85581 -22.7018,-41.84635 -11.3237,-65.09543 3.288,-6.71846 6.0248,-9.86743 26.2639,-30.21888 l 22.5934,-22.71889 91.0526,-0.19483 91.0525,-0.19483 5.9475,2.71786 c 7.4454,3.40237 12.0187,7.68705 15.0601,14.10957 6.1735,13.03644 0.1491,30.88162 -12.8583,38.08871 l -5.2544,2.91129 -94.1774,0.5 c -93.1668,0.49463 -94.207,0.52212 -96.9382,2.56179 -4.9571,3.70202 -6.769,7.03139 -6.769,12.43821 0,5.40585 1.811,8.73442 6.7672,12.43821 2.6415,1.97401 4.4057,2.08623 41.4382,2.6358 36.2768,0.53836 39.1451,0.71358 46.1792,2.82104 10.1022,3.02665 22.0735,8.74397 31.1912,14.89654 7.3184,4.93842 12.5067,9.42824 59.9202,51.85301 30.6783,27.45038 37.6055,35.67318 48.7691,57.88991 10.734,21.36184 14.0436,34.53267 14.8196,58.97653 0.4681,14.74601 0.2534,18.50923 -1.6127,28.26285 -8.9628,46.84733 -39.3845,82.97274 -81.8547,97.20154 -17.9879,6.02651 -14.5655,5.88005 -150.3321,6.43338 -68.4203,0.27885 -125.9756,0.1584 -127.9006,-0.26767 z m -50,-67.1835 c -5.6388,-0.97727 -12.1544,-4.82012 -17.2278,-10.16086 -5.3095,-5.5892 -6.7585,-9.52658 -6.7666,-18.38706 -0.011,-11.84522 9.3061,-24.64298 20.322,-27.91435 4.333,-1.28676 20.0707,-1.49537 112.8135,-1.49537 h 107.778 l -3.7095,7.25 c -3.5912,7.0186 -3.7088,7.58513 -3.6855,17.75 0.028,12.25117 1.8944,18.12602 8.5311,26.85361 2.239,2.94448 3.9301,5.48127 3.7579,5.63731 -0.6488,0.58798 -218.4689,1.0463 -221.8131,0.46672 z m 29.9936,-66.89198 c -4.9435,-1.50372 -8.6296,-3.96916 -13.1334,-8.78403 -5.4824,-5.8612 -7.2789,-10.59028 -7.3244,-19.28163 -0.047,-8.9696 2.3687,-14.67378 8.7837,-20.74086 9.2698,-8.76694 2.0317,-8.21813 112.1805,-8.50581 77.9136,-0.20348 97.4533,-0.51185 99.3035,-1.56715 5.9082,-3.36976 8.0833,-13.57945 4.237,-19.88763 -3.7487,-6.14812 -4.6788,-6.29855 -38.9416,-6.29855 -31.5171,0 -36.9389,-0.47227 -46.8951,-4.08482 -16.2459,-5.89474 -17.9286,-7.21608 -80.2381,-63.00787 -31.8496,-28.51802 -42.4399,-39.32215 -50.8101,-51.83566 -15.7994,-23.62034 -22.5324,-46.27566 -22.6079,-76.07165 -0.046,-18.16382 1.2283,-26.47484 6.5363,-42.62759 6.3575,-19.34684 14.9912,-33.45012 29.3904,-48.00991 19.2143,-19.42872 41.9742,-30.90821 68.0256,-34.31041 6.5768,-0.85889 40.6365,-1.09145 126.5,-0.86372 l 117.5,0.31163 4.3452,2.3189 c 2.3899,1.27539 6.3048,4.27847 8.6999,6.67351 13.2368,13.23687 7.6053,37.99249 -10.5451,46.35479 l -5.5,2.53399 -93.5,0.33628 c -60.1992,0.21651 -95.6221,0.71539 -99.4583,1.40071 -3.277,0.58543 -8.902,2.46588 -12.5,4.17877 -5.803,2.76266 -10.5708,7.11529 -42.2208,38.54435 l -35.6792,35.43 2.6792,2.76988 2.6791,2.76989 34.5,-34.28396 c 36.166,-35.93956 38.707,-38.01085 50.5,-41.16576 13.735,-3.67441 27.6644,1.07161 35.1495,11.97607 4.2958,6.25824 5.6857,11.61654 5.1003,19.66258 -0.8512,11.69844 -2.2945,13.63814 -34.2277,46 -24.953,25.28798 -29.6263,30.49946 -32.7305,36.5 -4.967,9.60147 -7.0656,18.19365 -7.083,29 -0.019,11.67221 1.5874,19.06492 6.3808,29.36988 3.1816,6.84009 5.4027,9.8721 12.1519,16.58891 9.3314,9.28659 16.412,13.30048 29.1687,16.53537 7.1314,1.80842 11.2159,2.00792 41.5,2.02693 32.7166,0.0205 33.7639,0.0825 40.2772,2.38145 8.496,2.9988 19.3898,10.22082 25.2515,16.74047 14.6922,16.34128 17.8621,42.12115 7.3257,59.57733 -1.8258,3.02479 -13.0785,15.11638 -26.7555,28.75 l -23.6045,23.52966 -95.9522,-0.086 c -52.7737,-0.0473 -97.0801,-0.42905 -98.4586,-0.84839 z m 155.8639,-280.49222 c -0.3534,-0.38052 0.8851,-2.96193 2.7522,-5.73648 9.3978,-13.965 8.31,-34.74734 -2.4608,-47.01461 -1.7319,-1.97251 -3.1489,-4.03521 -3.1489,-4.58378 0,-1.16032 121.2047,-2.60129 174.5,-2.07459 33.3182,0.32928 34.1057,0.38379 39.2701,2.71782 10.4424,4.71934 18.2576,16.5626 18.2251,27.6182 -0.033,11.29129 -10.0204,24.35248 -21.0369,27.51197 -3.6643,1.0509 -207.1569,2.57778 -208.1008,1.56147 z"/>
+                    </svg>
+                    <span class="btn-text">Start Quiz</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Quiz Section -->
+        <main class="content hidden" id="quiz-section">
+            <div class="quiz-container active" id="quiz-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="question-number">Question <span id="question-num">1</span> of 6</div>
+                <div class="question-text" id="question-text"></div>
+                <div class="options-container" id="options-container"></div>
+            </div>
+        </main>
+
+        <!-- Results Section -->
+        <main class="content hidden" id="results-section">
+            <div class="results-container active" id="results-container">
+                <h2 class="results-title">Your Personalized<br>Starter Kit</h2>
+                <p class="results-subtitle">Based on your answers, here's exactly what you need:</p>
+
+                <!-- Essentials -->
+                <div class="kit-section">
+                    <div class="kit-section-title">Essentials (everyone needs these)</div>
+                    <div class="kit-item">
+                        <div class="kit-item-name">Yoga Mat</div>
+                        <div class="kit-item-desc" id="mat-recommendation">
+                            A non-slip mat is essential for safety and comfort. Look for 4-6mm thickness for joint protection.
+                            <br><br>
+                            <strong>Materials:</strong> PVC (durable, budget-friendly) or natural rubber (eco-friendly, excellent grip).
+                            <br>
+                            <strong>Textures:</strong> Smooth for comfort, or textured for extra grip if you sweat a lot.
+                        </div>
+                        <div class="kit-item-reason">Avoid ultra-cheap mats (£10-15) because they wear out quickly and can be slippery. Invest in quality for better grip and durability.</div>
+                    </div>
+                    <div class="kit-item">
+                        <div class="kit-item-name">Comfortable Clothing</div>
+                        <div class="kit-item-desc">
+                            Leggings or fitted shorts that allow movement without revealing too much.
+                            <br><br>
+                            <strong>Materials:</strong> Look for stretchy, breathable fabrics like cotton blends or moisture-wicking technical fabrics.
+                            <br>
+                            <strong>Fit:</strong> Fitted enough to see your alignment, but comfortable for all ranges of motion.
+                        </div>
+                        <div class="kit-item-reason">Avoid overly baggy clothes because they make it hard to check your form and can get in the way.</div>
+                    </div>
+                </div>
+
+                <!-- Personalized -->
+                <div class="kit-section">
+                    <div class="kit-section-title">For You (based on your answers)</div>
+                    <div id="personalized-items"></div>
+                </div>
+
+                <!-- Free Resources -->
+                <div class="kit-section">
+                    <div class="kit-section-title">Free Resources</div>
+                    <div class="kit-item">
+                        <div class="kit-item-name">YouTube for Beginners</div>
+                        <div class="kit-item-desc">
+                            <a href="https://www.youtube.com/@yogawithadriene" target="_blank" style="color: #FFFFFF; text-decoration: none; font-weight: 500;">Yoga With Adriene</a>
+                            <span style="color: rgba(255,255,255,0.5); margin: 0 8px;">•</span>
+                            <a href="https://www.youtube.com/@CharlieFollows" target="_blank" style="color: #FFFFFF; text-decoration: none; font-weight: 500;">Charlie Follows</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yoga Apps -->
+                <div class="kit-section">
+                    <div class="kit-section-title">Yoga Apps</div>
+                    <div class="kit-item">
+                        <div class="kit-item-name">Daily Yoga</div>
+                        <div class="kit-item-desc">
+                            Free guided sessions with 500+ yoga poses, HD videos, and beginner-friendly programs.
+                            <br><br>
+                            <a href="https://www.dailyyoga.com" target="_blank" style="color: #FFFFFF; text-decoration: underline; font-weight: 500;">Download at dailyyoga.com</a>
+                        </div>
+                    </div>
+                    <div class="kit-item">
+                        <div class="kit-item-name">Yoga Down Dog</div>
+                        <div class="kit-item-desc">
+                            Free HD video workouts that customize to your level, time, and music preferences.
+                            <br><br>
+                            <a href="https://www.downdogapp.com" target="_blank" style="color: #FFFFFF; text-decoration: underline; font-weight: 500;">Download at downdogapp.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Form -->
+                <div class="email-form" id="email-form">
+                    <p>Get your personalized yoga kit + 10% off your first order</p>
+                    <form id="kit-form">
+                        <div class="form-row">
+                            <input type="email" class="email-input" id="email-input" placeholder="Enter your email" required>
+                            <button type="submit" class="submit-btn">Get PDF</button>
+                        </div>
+                    </form>
+                    <div class="success-message" id="success-message">
+                        <h4>Check your inbox!</h4>
+                        <p>Your personalized kit is on its way.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <span>&copy; 2026 Soulmigo Ltd. &nbsp;|&nbsp; Est. UK • Glasgow</span>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz Data
+        const questions = [
+            {
+                question: "Where will you practice most?",
+                options: ["At home", "At a studio", "Both"],
+                key: "location"
+            },
+            {
+                question: "What's your budget for getting started?",
+                options: ["Under £30 (essentials only)", "£30-60 (decent quality)", "£60-100 (investing in gear)", "£100+ (I want the best)"],
+                key: "budget"
+            },
+            {
+                question: "What's your number one concern about starting yoga?",
+                options: ["Slipping or falling", "Looking silly", "Not knowing what to do", "It might hurt", "None really"],
+                key: "concern"
+            },
+            {
+                question: "What surface will you practice on?",
+                options: ["Yoga mat (already have one)", "Carpet or rug", "Hardwood or tile", "Not sure yet"],
+                key: "surface"
+            },
+            {
+                question: "How do you feel about public studios?",
+                options: ["Excited! Ready to go", "Nervous but willing", "Intimidated, prefer home"],
+                key: "studio_feeling"
+            },
+            {
+                question: "Do you usually run hot or cold?",
+                options: ["Always cold", "Comfortable", "Always running hot"],
+                key: "temperature"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        function startQuiz() {
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('page-wrapper').className = 'page-wrapper quiz';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-num').textContent = currentQuestion + 1;
+            document.getElementById('progress-fill').style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
+            document.getElementById('question-text').textContent = q.question;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            if (q.key === 'budget') {
+                // Slider for budget question
+                const sliderContainer = document.createElement('div');
+                sliderContainer.className = 'slider-container';
+                const values = ["Under £30", "£30-60", "£60-100", "£100+"];
+                const labels = ["£0", "£100+"];
+
+                sliderContainer.innerHTML = `
+                    <div class="slider-labels">
+                        <span>${labels[0]}</span>
+                        <span>${labels[1]}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                        <button type="button" class="slider-btn slider-btn-minus" id="slider-minus">−</button>
+                        <input type="range" min="1" max="4" value="2" class="slider" id="budget-slider">
+                        <button type="button" class="slider-btn slider-btn-plus" id="slider-plus">+</button>
+                    </div>
+                    <div class="slider-value" id="slider-value">${values[1]}</div>
+                `;
+                container.appendChild(sliderContainer);
+
+                const slider = document.getElementById('budget-slider');
+                const valueDisplay = document.getElementById('slider-value');
+                const minusBtn = document.getElementById('slider-minus');
+                const plusBtn = document.getElementById('slider-plus');
+
+                function updateSliderValue() {
+                    valueDisplay.textContent = values[slider.value - 1];
+                }
+
+                slider.addEventListener('input', updateSliderValue);
+
+                function updateButtonStates() {
+                    minusBtn.disabled = slider.value <= 1;
+                    plusBtn.disabled = slider.value >= 4;
+                }
+
+                minusBtn.addEventListener('click', function() {
+                    if (slider.value > 1) {
+                        slider.value = parseInt(slider.value) - 1;
+                        updateSliderValue();
+                        updateButtonStates();
+                    }
+                });
+
+                plusBtn.addEventListener('click', function() {
+                    if (slider.value < 4) {
+                        slider.value = parseInt(slider.value) + 1;
+                        updateSliderValue();
+                        updateButtonStates();
+                    }
+                });
+
+                slider.addEventListener('input', function() {
+                    updateSliderValue();
+                    updateButtonStates();
+                });
+
+                // Initialize button states
+                updateButtonStates();
+
+                const continueBtn = document.createElement('button');
+                continueBtn.className = 'btn-primary';
+                continueBtn.style.marginTop = '20px';
+                continueBtn.style.width = '100%';
+                continueBtn.textContent = 'Continue';
+                continueBtn.onclick = function() {
+                    selectAnswer(q.key, values[slider.value - 1]);
+                };
+                container.appendChild(continueBtn);
+            } else {
+                // Regular options
+                q.options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.onclick = () => selectAnswer(q.key, option);
+                    container.appendChild(btn);
+                });
+            }
+        }
+
+        function selectAnswer(key, value) {
+            answers[key] = value;
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('page-wrapper').className = 'page-wrapper results';
+
+            // Generate personalized recommendations
+            const personalizedContainer = document.getElementById('personalized-items');
+            let recommendations = [];
+
+            // Grip socks recommendation logic
+            const needsSocks = (
+                answers.concern === "Slipping or falling" ||
+                answers.temperature === "Always cold" ||
+                answers.location === "At a studio" ||
+                answers.location === "Both" ||
+                answers.surface === "Hardwood or tile"
+            );
+
+            if (needsSocks) {
+                let reason = "";
+                if (answers.concern === "Slipping or falling") {
+                    reason = "Because you're concerned about slipping, grip socks will give you stability.";
+                } else if (answers.temperature === "Always cold") {
+                    reason = "Since you run cold, socks will keep your feet warm during floor poses.";
+                } else if (answers.location === "At a studio" || answers.location === "Both") {
+                    reason = "Studios are more hygienic with socks and you'll feel more comfortable.";
+                } else {
+                    reason = "Grip socks will help you feel stable on smooth surfaces.";
+                }
+
+                recommendations.push(`
+                    <div class="product-placeholder">
+                        <div class="product-content">
+                            <div class="product-content-image">
+                                <img src="assets/images/grip-socks.jpg" alt="Premium Grip Socks" class="product-image-full">
+                            </div>
+                            <div class="product-content-text">
+                                <div class="product-tag">Recommended For You</div>
+                                <div class="product-name">Anatomical Flow Grip Socks</div>
+                                <div class="product-desc">${reason}</div>
+                                <div class="kit-item-reason" style="color: rgba(255,255,255,0.95);">Full sole silicone grip</div>
+                                <div class="kit-item-reason" style="color: rgba(255,255,255,0.95);">78% combed cotton</div>
+                                <div class="kit-item-reason" style="color: rgba(255,255,255,0.95);">Studio ready</div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            }
+
+            // Props recommendation
+            if (answers.studio_feeling === "Intimidated, prefer home" || answers.concern === "Not knowing what to do") {
+                recommendations.push(`
+                    <div class="kit-item">
+                        <div class="kit-item-name">Yoga Blocks & Strap</div>
+                        <div class="kit-item-desc">These props make poses accessible and help you learn proper alignment.</div>
+                        <div class="kit-item-reason">Perfect for home practice where there's no teacher to adjust you.</div>
+                    </div>
+                `);
+            }
+
+            // Mat recommendation based on budget
+            const matRec = document.getElementById('mat-recommendation');
+            if (answers.budget && answers.budget.includes("Under")) {
+                matRec.innerHTML = `<strong>Budget pick (£20-30):</strong> Gaiam or BalanceFrom offer great starter mats. Look for 4-6mm thickness with a textured surface for grip.<br><br>Durable enough for beginners - upgrade when you're ready to commit.`;
+            } else if (answers.budget && answers.budget.includes("100+")) {
+                matRec.innerHTML = `<strong>Premium choice (£80-120):</strong> Manduka PRO or Lululemon. These mats last 10+ years and have excellent grip that improves with use.<br><br>Worth the investment if yoga becomes part of your routine.`;
+            }
+
+            if (recommendations.length === 0) {
+                recommendations.push(`
+                    <div class="kit-item">
+                        <div class="kit-item-name">You're all set with essentials!</div>
+                        <div class="kit-item-desc">Based on your answers, start with a mat and comfortable clothing. You can always add more as you progress.</div>
+                    </div>
+                `);
+            }
+
+            personalizedContainer.innerHTML = recommendations.join('');
+        }
+
+        // Form submission
+        document.getElementById('kit-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email-input').value;
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            const form = this;
+            const formText = document.getElementById('email-form').querySelector('p');
+            const successMessage = document.getElementById('success-message');
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            const formData = new FormData();
+            formData.append('fields[email]', email);
+            formData.append('ml-submit', '1');
+            formData.append('anticsrf', 'true');
+
+            try {
+                const response = await fetch('https://assets.mailerlite.com/jsonp/2213159/forms/182677428452197540/subscribe', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                });
+
+                // With no-cors mode, we assume success if no network error
+                form.style.display = 'none';
+                formText.style.display = 'none';
+                successMessage.classList.add('show');
+
+            } catch (error) {
+                console.error('Error:', error);
+                // Show error state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Try Again';
+                // Add error message temporarily
+                const errorDiv = document.createElement('div');
+                errorDiv.style.color = '#ff6b6b';
+                errorDiv.style.fontSize = '0.85rem';
+                errorDiv.style.marginTop = '10px';
+                errorDiv.textContent = 'Something went wrong. Please try again.';
+                form.appendChild(errorDiv);
+                setTimeout(() => errorDiv.remove(), 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>
