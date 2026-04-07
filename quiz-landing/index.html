@@ -898,35 +898,109 @@
             font-size: 0.9rem;
         }
 
-        /* --- Minimalist Results Styles --- */
-        .profile-text {
-            color: rgba(255, 255, 255, 0.8);
+        /* --- New Results Styles --- */
+        .archetype-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .archetype-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
             font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 32px;
         }
 
-        .profile-text div {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .story-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
         }
 
-        .profile-text div:last-child {
-            border-bottom: none;
-        }
-
-        .section-label {
+        .story-text {
+            color: rgba(255, 255, 255, 0.9);
             font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #0D6B2E;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 8px 16px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .action-plan {
+            margin-top: 16px;
+        }
+
+        .action-step {
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .action-step:before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .gear-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .gear-item {
+            margin-bottom: 16px;
+        }
+
+        .gear-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .gear-label {
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .gear-desc {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .resource-highlight {
+            background: rgba(45, 95, 62, 0.2);
+            border: 1px solid rgba(45, 95, 62, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .resource-highlight a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         .recommendation-text {
@@ -1173,44 +1247,47 @@
         <!-- Results Section -->
         <main class="content hidden" id="results-section">
             <div class="results-container active" id="results-container">
-                <h2 class="results-title">Your Yoga Profile</h2>
-                <p class="results-subtitle" id="profile-summary">Based on your answers</p>
 
-                <!-- Profile -->
-                <div class="kit-section">
-                    <div class="profile-text" id="profile-details"></div>
+                <!-- Archetype Header -->
+                <h2 class="archetype-title" id="archetype-title"></h2>
+                <p class="archetype-subtitle">Welcome to your practice</p>
+
+                <!-- Story -->
+                <div class="story-section">
+                    <p class="story-text" id="story-text"></p>
                 </div>
 
-                <!-- Main Product -->
-                <div class="kit-section">
-                    <div id="main-product"></div>
-                </div>
-
-                <!-- Mat Recommendation -->
-                <div class="kit-section">
-                    <div class="section-label">Mat</div>
-                    <div class="recommendation-text" id="mat-recommendation"></div>
-                </div>
-
-                <!-- Additional Items -->
-                <div class="kit-section" id="additional-section" style="display: none;">
-                    <div class="section-label">Additional</div>
-                    <div id="additional-items"></div>
-                </div>
-
-                <!-- Resources -->
-                <div class="kit-section">
-                    <div class="section-label">Resources</div>
-                    <div class="resource-item">
-                        <a href="https://www.youtube.com/@yogawithadriene" target="_blank">Yoga With Adriene</a>
-                        <span class="spacer"></span>
-                        <a href="https://www.youtube.com/@CharlieFollows" target="_blank">Charlie Follows</a>
+                <!-- Why Grip Socks -->
+                <div class="gear-section">
+                    <div class="section-title">Why Anatomical Grip Socks</div>
+                    <div class="gear-item">
+                        <p class="gear-desc" id="socks-reason"></p>
                     </div>
-                    <div class="resource-item">
-                        <a href="https://www.dailyyoga.com" target="_blank">Daily Yoga App</a>
-                        <span class="spacer"></span>
-                        <a href="https://www.downdogapp.com" target="_blank">Down Dog App</a>
+                </div>
+
+                <!-- Action Plan -->
+                <div class="gear-section">
+                    <div class="section-title">Your action plan</div>
+                    <div class="action-plan" id="action-plan"></div>
+                </div>
+
+                <!-- Practice Gear -->
+                <div class="gear-section">
+                    <div class="section-title">For your practice</div>
+                    <div class="gear-item">
+                        <div class="gear-label">Mat</div>
+                        <p class="gear-desc" id="mat-recommendation"></p>
                     </div>
+                    <div class="gear-item">
+                        <div class="gear-label">Clothing</div>
+                        <p class="gear-desc" id="clothing-recommendation"></p>
+                    </div>
+                </div>
+
+                <!-- Resource Highlight -->
+                <div class="resource-highlight">
+                    <div class="section-title">Recommended for you</div>
+                    <a id="resource-link" href="#" target="_blank"></a>
                 </div>
 
                 <!-- Email Form -->
@@ -1600,129 +1677,159 @@
             return R * c;
         }
 
+        // Archetype data
+        const archetypes = {
+            mindfulBeginner: {
+                title: 'Mindful Beginner',
+                story: 'You are taking your first steps into yoga, and that is already an achievement. You are looking for a space to disconnect from mental noise and reconnect with yourself, at your own pace. Yoga is not just exercise for you, it is a moment of calm in your day.',
+                socksReason: 'When starting out, the last thing you want to worry about is slipping while learning basic poses. The anatomical design adapts to your feet for greater stability.',
+                actionPlan: [
+                    'Start with 15-20 minute sessions, 2-3 times per week',
+                    'Use blocks and a strap to modify poses based on your flexibility',
+                    'Practice Hatha or Restorative to build confidence and mental calm',
+                    'Progress gradually: when you feel comfortable, try a gentle Vinyasa class'
+                ],
+                mat: 'Look for 4-6mm thickness with textured grip. Extra thickness protects your joints while learning.',
+                clothing: 'Leggings or comfortable pants that will not slide down. A fitted tee or top that lets you move without worrying about it riding up. Add a top layer for final relaxation.',
+                resource: { name: 'Yoga With Adriene', url: 'https://www.youtube.com/@yogawithadriene' }
+            },
+            fitnessSeeker: {
+                title: 'Fitness Seeker',
+                story: 'You come to yoga looking for more than relaxation: you want a practice that makes you sweat and challenges you physically. Your goal is to get fit, build strength, and see real results.',
+                socksReason: 'In a dynamic practice, you need complete confidence in every transition without losing momentum. The anatomical grip connects where your foot needs it most.',
+                actionPlan: [
+                    'Start with basic Vinyasa 2 times per week',
+                    'Add complementary strength training like planks and squats',
+                    'Goal: 4 weekly sessions within 2 months',
+                    'Try Ashtanga for greater intensity'
+                ],
+                mat: '4-5mm with reliable grip. You need stability for dynamic sequences and quick transitions. Natural rubber material for durability.',
+                clothing: 'High-compression leggings that stay in place. Medium-high support sports bra. Avoid loose clothing that interferes with twists and turns.',
+                resource: { name: 'Charlie Follows', url: 'https://www.youtube.com/@CharlieFollows' }
+            },
+            flexibilityHunter: {
+                title: 'Flexibility Hunter',
+                story: 'Your body feels stiff and you know yoga is the key to releasing it. You understand that flexibility is not a destination, it is a daily journey.',
+                socksReason: 'Holding position is vital for deep stretching. Anatomical Grip Socks prevent micro-slipping that breaks your focus and limits your depth.',
+                actionPlan: [
+                    '10 minutes daily of basic stretching',
+                    'Combine Yin for deep stretch with Vinyasa for movement',
+                    'Use a strap for poses you cannot yet reach',
+                    'Patience: 3-6 months of consistent practice'
+                ],
+                mat: 'Two options: a thinner one, 3-4mm for Vinyasa with better ground connection, and a more cushioned one, 5-6mm for Yin where you will be on the floor longer.',
+                clothing: 'Four-way stretch fabrics that move with you. Wide-leg pants or shorts that let you see your knees for alignment. Layers for post-stretch cool-down.',
+                resource: { name: 'Daily Yoga App', url: 'https://www.dailyyoga.com' }
+            },
+            dedicatedFlow: {
+                title: 'Dedicated Flow',
+                story: 'Yoga is already part of your identity. Your mat is your second home. You know your body, you know how far to push, and you seek to deepen into challenges.',
+                socksReason: 'In an advanced practice, absolute confidence in foot and hand allows you to explore complex poses. The anatomical design understands where your foot works hardest.',
+                actionPlan: [
+                    '6-day practice or 4-5 intense Vinyasa sessions',
+                    'Work on advanced transitions and arm balances',
+                    'Retreats or workshops once per quarter',
+                    'Add pranayama and meditation before each session'
+                ],
+                mat: 'Invest in a premium 4-5mm dense rubber mat. Durable, with grip that improves with use. Will accompany you through years of daily practice.',
+                clothing: 'Seamless high-performance leggings. Max support breathable top. For intense practices, consider moisture-wicking technical fabrics.',
+                resource: { name: 'Charlie Follows', url: 'https://www.youtube.com/@CharlieFollows' }
+            },
+            restorativeSoul: {
+                title: 'Restorative Soul',
+                story: 'The world is fast and you need a counterbalance. For you, yoga is not about performance, it is about healing. You are looking for a safe space to process, rest, and nourish your nervous system.',
+                socksReason: 'In poses held for minutes, your feet stay warm and anchored to the floor. The full anatomical coverage provides lasting comfort.',
+                actionPlan: [
+                    '20-30 minutes of Yin or Restorative, 3 times per week',
+                    'Create a sacred space: candles, soft music, no phone',
+                    'Invest in a bolster and 2-3 blankets',
+                    'Practice at day end or before bed'
+                ],
+                mat: 'Prioritize comfort over minimal thickness. Look for 5-6mm or more with soft surface. You can add a blanket on top for long-held poses.',
+                clothing: 'Loose, comfortable clothing like cotton leggings or wide pants. Long tees or sweaters that keep you warm. Socks optional for extra warmth.',
+                resource: { name: 'Yoga With Adriene', url: 'https://www.youtube.com/@yogawithadriene' }
+            },
+            balancedYogi: {
+                title: 'Balanced Yogi',
+                story: 'You have found the sweet spot between effort and fun. You enjoy yoga because it makes you feel good, not because it has to be perfect. Your practice is balance: movement without obsession, progress without pressure.',
+                socksReason: 'When practice flows without distractions, the experience becomes more enjoyable from the very first pose. The design that understands your foot shape.',
+                actionPlan: [
+                    'Alternate 2 fun Vinyasa with 2 gentle Hatha each week',
+                    'Experiment with Kundalini, aerial, yoga nidra',
+                    'Join a community: in-person classes or workshops',
+                    'Stay curious about your body'
+                ],
+                mat: 'A versatile 4-5mm mat that works for everything. Good balance of grip and portability. Consider a lighter one if you carry your mat.',
+                clothing: 'Whatever makes you feel good. Comfortable leggings, supportive tops that do not restrict. Prefer natural fabrics that let your skin breathe. Layers to adapt to temperature.',
+                resource: { name: 'Down Dog App', url: 'https://www.downdogapp.com' }
+            }
+        };
+
+        function getArchetype(experience, goal, yogaType) {
+            const isNew = experience.includes('new') || experience.includes('beginner') || experience.includes('Never');
+            const isIntermediate = experience.includes('intermediate');
+            const isAdvanced = experience.includes('advanced');
+            const isMentalHealth = goal === 'Mental health';
+            const isFitness = goal === 'Get fitter';
+            const isFlexibility = goal === 'Flexibility';
+            const isFun = goal === 'For fun';
+            const isHatha = yogaType.includes('Hatha');
+            const isVinyasa = yogaType.includes('Vinyasa');
+            const isYin = yogaType.includes('Yin');
+            const isRestorative = yogaType.includes('Restorative');
+            const isAshtanga = yogaType.includes('Ashtanga');
+
+            if ((isNew || isIntermediate) && isMentalHealth && (isHatha || isRestorative)) {
+                return 'mindfulBeginner';
+            }
+            if ((isNew || isIntermediate) && isFitness && (isVinyasa || isAshtanga)) {
+                return 'fitnessSeeker';
+            }
+            if (isFlexibility && (isYin || isVinyasa)) {
+                return 'flexibilityHunter';
+            }
+            if ((isIntermediate || isAdvanced) && (isVinyasa || isAshtanga)) {
+                return 'dedicatedFlow';
+            }
+            if (isMentalHealth && (isYin || isRestorative)) {
+                return 'restorativeSoul';
+            }
+            if (isIntermediate && isFun && (isHatha || isVinyasa)) {
+                return 'balancedYogi';
+            }
+            if (isNew) {
+                return 'mindfulBeginner';
+            }
+            return 'balancedYogi';
+        }
+
         function showResults() {
             document.getElementById('quiz-section').classList.add('hidden');
             document.getElementById('results-section').classList.remove('hidden');
             document.getElementById('page-wrapper').className = 'page-wrapper results';
 
-            // Parse answers
-            const workoutFreq = answers.workout_frequency || '';
             const experience = answers.yoga_experience || '';
-            const age = answers.age || '';
             const goal = answers.goals || '';
             const yogaType = answers.yoga_type || '';
 
-            // Build profile text
-            const profileDetails = document.getElementById('profile-details');
-            let profileHTML = '';
+            const archetypeKey = getArchetype(experience, goal, yogaType);
+            const archetype = archetypes[archetypeKey];
 
-            if (workoutFreq) profileHTML += `<div>You practice ${workoutFreq.toLowerCase()}</div>`;
-            if (experience) {
-                const expText = experience.replace('Yes, I\'m a ', '').replace('Never (I\'m new)', 'New to yoga');
-                profileHTML += `<div>Level: ${expText}</div>`;
-            }
-            if (age) profileHTML += `<div>Age: ${age}</div>`;
-            if (goal) profileHTML += `<div>Goal: ${goal}</div>`;
-            if (yogaType) {
-                const typeText = yogaType.split(' - ')[0];
-                profileHTML += `<div>Style: ${typeText}</div>`;
-            }
+            document.getElementById('archetype-title').textContent = archetype.title;
+            document.getElementById('story-text').textContent = archetype.story;
+            document.getElementById('socks-reason').textContent = archetype.socksReason;
 
-            profileDetails.innerHTML = profileHTML;
+            const actionPlanEl = document.getElementById('action-plan');
+            actionPlanEl.innerHTML = archetype.actionPlan.map(step =>
+                '<div class="action-step">' + step + '</div>'
+            ).join('');
 
-            // Main product (grip socks)
-            const mainProduct = document.getElementById('main-product');
-            const needsSocks = (
-                experience.includes('new') || experience.includes('beginner') ||
-                goal === 'Flexibility' ||
-                yogaType.includes('Yin') || yogaType.includes('Ashtanga') || yogaType.includes('Vinyasa')
-            );
+            document.getElementById('mat-recommendation').textContent = archetype.mat;
+            document.getElementById('clothing-recommendation').textContent = archetype.clothing;
 
-            if (needsSocks) {
-                let reason = '';
-                let detail = '';
-                let specs = '';
-
-                if (experience.includes('new') || experience.includes('beginner')) {
-                    reason = 'Provide stability while learning poses';
-                    detail = 'When starting, your feet need to feel grounded. The silicone sole grips the floor so you can focus on alignment instead of worrying about slipping.';
-                    specs = 'Full silicone sole  78% combed cotton  Arch support  Seamless toes';
-                } else if (goal === 'Flexibility') {
-                    reason = 'Help hold positions longer without slipping';
-                    detail = 'For flexibility progress, you need to hold poses. Grip socks prevent micro-sliding that breaks your focus and limits depth.';
-                    specs = 'Full silicone sole  78% combed cotton  Breathable  Moisture-wicking';
-                } else if (yogaType.includes('Yin')) {
-                    reason = 'Keep feet stable and warm during longer holds';
-                    detail = 'Yin poses can last 5 minutes or more. Cold feet create tension. These keep feet warm and grounded throughout your practice.';
-                    specs = 'Full silicone sole  Thermal insulation  78% cotton  Soft grip';
-                } else if (yogaType.includes('Ashtanga') || yogaType.includes('Vinyasa')) {
-                    reason = 'Extra grip for flowing movements';
-                    detail = 'Dynamic styles mean continuous movement. The full sole grips during transitions so you can flow without breaking concentration.';
-                    specs = 'Full silicone sole  Reinforced heel  78% cotton  Durable';
-                } else {
-                    reason = 'Enhance stability during practice';
-                    detail = 'Consistent grip helps you maintain proper alignment in any pose.';
-                    specs = 'Full silicone sole  78% combed cotton  Arch support';
-                }
-
-                mainProduct.innerHTML = `
-                    <div class="product-block">
-                        <img src="assets/images/grip-socks.jpg" alt="Grip Socks" class="product-img">
-                        <div class="product-info">
-                            <div class="product-name">Anatomical Flow Grip Socks</div>
-                            <div class="product-reason">${reason}</div>
-                            <div class="product-detail">${detail}</div>
-                            <div class="product-features">${specs}</div>
-                            <div class="product-comparison">Unlike basic socks with grip dots only on the sole, the full silicone coverage provides consistent grip in any pose position.</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                mainProduct.innerHTML = `
-                    <div class="product-block">
-                        <img src="assets/images/grip-socks.jpg" alt="Grip Socks" class="product-img">
-                        <div class="product-info">
-                            <div class="product-name">Anatomical Flow Grip Socks</div>
-                            <div class="product-reason">Enhance stability during practice</div>
-                            <div class="product-detail">Consistent grip helps you maintain proper alignment in any pose, especially when hands or feet need to be planted firmly.</div>
-                            <div class="product-features">Full silicone sole  78% combed cotton  Arch support</div>
-                            <div class="product-comparison">Unlike basic socks with grip dots only on the sole, the full silicone coverage provides consistent grip in any pose position.</div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Mat recommendation
-            const matRec = document.getElementById('mat-recommendation');
-            if (experience.includes('new') || experience.includes('beginner')) {
-                matRec.innerHTML = 'Starter mat (£20-35) with 4-6mm thickness. Gaiam, BalanceFrom, or Lululemon entry-level options work well for beginners. Look for textured surface for grip and closed-cell construction to avoid absorbing sweat. Thicker mats (6mm) protect joints but may feel less stable for balance poses.';
-            } else if (experience.includes('advanced') || yogaType.includes('Ashtanga')) {
-                matRec.innerHTML = 'Premium mat (£70-120) for serious practice. Manduka PRO or Lululemon mats last 10+ years with excellent grip that actually improves with use. These require no breaking in and maintain performance over years of daily practice. The investment pays off long-term.';
-            } else if (yogaType.includes('Yin') || yogaType.includes('Restorative')) {
-                matRec.innerHTML = 'Comfort-focused mat (£30-50) with extra cushioning. Softer surface (5-6mm or more) is more comfortable for longer holds and floor poses. Prioritize comfort over minimal thickness. TPE foam provides more cushion than rubber at a lower price point.';
-            } else {
-                matRec.innerHTML = 'All-purpose mat (£30-50) with 4-5mm thickness and non-slip surface. Balance between grip, cushioning, and portability. Natural rubber provides better grip and eco-friendly option, while TPE is more affordable and lighter.';
-            }
-
-            // Additional items (props, bolster)
-            const additionalSection = document.getElementById('additional-section');
-            const additionalItems = document.getElementById('additional-items');
-            let additionalHTML = '';
-
-            // Props for beginners
-            if (experience.includes('new') || experience.includes('beginner') || experience.includes('intermediate')) {
-                additionalHTML += '<div class="additional-item">Yoga blocks and strap help with proper alignment</div>';
-            }
-
-            // Bolster for mental health or restorative
-            if (goal === 'Mental health' || yogaType.includes('Yin') || yogaType.includes('Restorative')) {
-                additionalHTML += '<div class="additional-item">Bolster or cushion for restorative poses</div>';
-            }
-
-            if (additionalHTML) {
-                additionalItems.innerHTML = additionalHTML;
-                additionalSection.style.display = 'block';
-            }
+            const resourceLink = document.getElementById('resource-link');
+            resourceLink.textContent = archetype.resource.name;
+            resourceLink.href = archetype.resource.url;
         }
 
         // Form submission
